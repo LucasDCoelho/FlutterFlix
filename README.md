@@ -42,11 +42,11 @@ flutter pub get
 
 ### Dependencies
 
-[Mobx](https://mobx.netlify.app/)
-[Flutter Modular](https://pub.dev/packages/flutter_modular)
-[Dio](https://pub.dev/packages/dio)
-[Firebase](https://firebase.google.com/docs/guides?hl=pt)
-For a complete list of dependencies, refer to the pubspec.yaml file.
+- [Mobx](https://mobx.netlify.app/)
+- [Flutter Modular](https://pub.dev/packages/flutter_modular)
+- [Dio](https://pub.dev/packages/dio)
+- [Firebase](https://firebase.google.com/docs/guides?hl=pt)
+- For a complete list of dependencies, refer to the pubspec.yaml file.
 
 ### Setup
 
