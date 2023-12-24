@@ -30,15 +30,15 @@ flutter pub get
 
 ### Features
 
-**Streaming Experience:** Mimics popular streaming platforms with a sleek and user-friendly interface.
+- **Streaming Experience:** Mimics popular streaming platforms with a sleek and user-friendly interface.
 
-**Mobx for State Management:** Utilizes Mobx for efficient state management in Flutter applications.
+- **Mobx for State Management:** Utilizes Mobx for efficient state management in Flutter applications.
 
-**Modular Architecture:** Implements Flutter Modular for a modular and scalable project structure.
+- **Modular Architecture:** Implements Flutter Modular for a modular and scalable project structure.
 
-**Dio for Networking:** Integrates Dio for making network requests, ensuring a robust communication layer.
+- **Dio for Networking:** Integrates Dio for making network requests, ensuring a robust communication layer.
 
-**Firebase Integration:** Leverages Firebase for backend services, authentication, and more.
+- **Firebase Integration:** Leverages Firebase for backend services, authentication, and more.
 
 ### Dependencies
 
