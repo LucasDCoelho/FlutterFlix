@@ -42,6 +42,7 @@ dependencies:
   mobx_codegen: ^2.4.1
   flutter_mobx: ^2.2.0+1
   firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
 
 dev_dependencies:
   flutter_test:
