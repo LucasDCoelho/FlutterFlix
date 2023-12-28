@@ -21,39 +21,41 @@ class LoginScreen extends StatelessWidget {
           children: [
             Observer(
                 builder: (_) => AuthForm<AuthStore>(
-                      onChanged: (value) => authStore.client.email = value,
+                      onChanged: authStore.client.setEmail,
                       decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: "Email",
-                        hintText: "Digite seu email",
-                        errorText: authStore.validateEmail()
-                      ),
+                          border: const OutlineInputBorder(),
+                          labelText: "Email",
+                          hintText: "Digite seu email",
+                          errorText: authStore.validateEmail()),
                     )),
             const SizedBox(
               height: 20,
             ),
             Observer(
                 builder: (_) => AuthForm<AuthStore>(
-                      onChanged: (value) => authStore.client.password = value,
+                      onChanged: authStore.client.setPassword,
                       decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: "Senha",
-                        hintText: "Digite sua senha",
-                        errorText: authStore.validatePassword()
-                      ),
+                          border: const OutlineInputBorder(),
+                          labelText: "Senha",
+                          hintText: "Digite sua senha",
+                          errorText: authStore.validatePassword()),
                     )),
             const SizedBox(
               height: 50,
             ),
-            ElevatedButton(
-              onPressed: authStore.isValid
-                  ? () {
-                      authStore.login();
-                      Modular.to.pushNamed("/home/");
-                    }
-                  : null,
-              child: const Text("Entrar"),
-            )
+            Observer(
+              builder: (_) => ElevatedButton(
+                      onPressed: authStore.isAuthenticated
+                          ? () async {
+                              bool loginSuccessful = await authStore.login();
+                              if (loginSuccessful) {
+                                Modular.to.navigate("/home/");
+                                
+                              }
+                            }
+                          : null,
+                      child: const Text("Entrar"),
+                    ))
           ],
         ),
       ),

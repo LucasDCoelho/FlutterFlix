@@ -4,6 +4,7 @@ import 'package:flutter_flix_project_4/src/modules/auth/auth_guards.dart';
 import 'package:flutter_flix_project_4/src/modules/auth/services/firebase_auth_service.dart';
 import 'package:flutter_flix_project_4/src/modules/auth/stores/auth_store/auth_store.dart';
 import 'package:flutter_flix_project_4/src/modules/auth/views/login_screen.dart';
+import 'package:flutter_flix_project_4/src/modules/client/client_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AuthModule extends Module {

@@ -59,33 +59,33 @@ mixin _$Client on ClientBase, Store {
       ActionController(name: 'ClientBase', context: context);
 
   @override
-  dynamic changeEmail(String value) {
-    final _$actionInfo = _$ClientBaseActionController.startAction(
-        name: 'ClientBase.changeEmail');
-    try {
-      return super.changeEmail(value);
-    } finally {
-      _$ClientBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic changePassword(String value) {
-    final _$actionInfo = _$ClientBaseActionController.startAction(
-        name: 'ClientBase.changePassword');
-    try {
-      return super.changePassword(value);
-    } finally {
-      _$ClientBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic changename(String value) {
+  dynamic setEmail(String value) {
     final _$actionInfo =
-        _$ClientBaseActionController.startAction(name: 'ClientBase.changename');
+        _$ClientBaseActionController.startAction(name: 'ClientBase.setEmail');
     try {
-      return super.changename(value);
+      return super.setEmail(value);
+    } finally {
+      _$ClientBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setPassword(String value) {
+    final _$actionInfo = _$ClientBaseActionController.startAction(
+        name: 'ClientBase.setPassword');
+    try {
+      return super.setPassword(value);
+    } finally {
+      _$ClientBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setName(String value) {
+    final _$actionInfo =
+        _$ClientBaseActionController.startAction(name: 'ClientBase.setName');
+    try {
+      return super.setName(value);
     } finally {
       _$ClientBaseActionController.endAction(_$actionInfo);
     }

@@ -8,17 +8,17 @@ abstract class ClientBase with Store{
   @observable
   String email = "";
   @action
-  changeEmail(String value) => email = value;
+  setEmail(String value) => email = value;
 
   @observable
   String password = "";
   @action
-  changePassword(String value) => password = value;
+  setPassword(String value) => password = value;
 
   @observable
   String name = "";
   @action
-  changename(String value) => name = value;
+  setName(String value) => name = value;
 
 
 }

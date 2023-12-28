@@ -4,9 +4,9 @@ import "package:mobx/mobx.dart";
 
 part "auth_store.g.dart";
 
-class AuthStore = _AuthStore with _$AuthStore;
+class AuthStore = AuthStoreBase with _$AuthStore;
 
-abstract class _AuthStore with Store{
+abstract class AuthStoreBase with Store{
   var client = Client();
   final authService = FirebaseAuthService();
 
@@ -21,17 +21,6 @@ abstract class _AuthStore with Store{
       return true;
     }
     return false;
-  }
-
-  String? validateName(){
-    if(client.name == "" || client.name.isEmpty){
-      return "Este campo é obrigatorio";
-    }
-
-    if(client.name.length < 3){
-      return "Seu nome precisa ter mais de 3 caracteres";
-    }
-    return null;  
   }
 
   String? validateEmail(){

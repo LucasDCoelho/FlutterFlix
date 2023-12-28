@@ -5,7 +5,20 @@ class AuthGuard extends RouteGuard{
   AuthGuard() : super(redirectTo: '/login/');
 
   @override
-  Future<bool> canActivate(String path, ModularRoute router) {
-    return Modular.get<AuthStore>().login();
+  Future<bool> canActivate(String path, ModularRoute route) async {
+    final authStore = Modular.get<AuthStore>();
+    
+    await Future.delayed(const Duration(seconds: 1));
+    // Se o usuário não estiver autenticado, redirecione para '/login/'
+    if (!authStore.isAuthenticated) {
+      return false;
+    }
+
+    // Se o caminho atual for '/login/', permita a navegação
+    if (path == '/login/') {
+      return true;
+    }
+
+    return true;
   }
 }
