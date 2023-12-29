@@ -9,7 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authStore = AuthStore();
+    final authStore = Modular.get<AuthStore>();
 
     return Scaffold(
       appBar: AppBar(
@@ -44,18 +44,23 @@ class LoginScreen extends StatelessWidget {
               height: 50,
             ),
             Observer(
-              builder: (_) => ElevatedButton(
-                      onPressed: authStore.isAuthenticated
+                builder: (_) => ElevatedButton(
+                      onPressed: authStore.isValid
                           ? () async {
-                              bool loginSuccessful = await authStore.login();
-                              if (loginSuccessful) {
-                                Modular.to.navigate("/home/");
-                                
+                              bool logginSuccessful = await authStore.login();
+                              if(logginSuccessful){
+                                if (authStore.authService.currentUser != null) {
+                                  Modular.to.pushReplacementNamed("/home/");
+                                }
                               }
                             }
                           : null,
                       child: const Text("Entrar"),
-                    ))
+                    )),
+            Observer(
+              builder: (_) => ElevatedButton(
+                  onPressed: authStore.logout, child: const Text("Sair")),
+            )
           ],
         ),
       ),

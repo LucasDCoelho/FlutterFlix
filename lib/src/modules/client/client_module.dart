@@ -4,12 +4,10 @@ import 'package:flutter_flix_project_4/src/modules/client/screens/home_screen.da
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ClientModule extends Module {
-
   @override
   List<Module> get imports => [
-    AuthModule()
+    AuthModule(),
   ];
-
 
   @override
   void routes(RouteManager r) {
