@@ -22,6 +22,7 @@ class LoginScreen extends StatelessWidget {
             Observer(
                 builder: (_) => AuthForm<AuthStore>(
                       onChanged: authStore.client.setEmail,
+                      obscureText: false,
                       decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "Email",
@@ -34,11 +35,17 @@ class LoginScreen extends StatelessWidget {
             Observer(
                 builder: (_) => AuthForm<AuthStore>(
                       onChanged: authStore.client.setPassword,
+                      obscureText: true,
                       decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "Senha",
                           hintText: "Digite sua senha",
-                          errorText: authStore.validatePassword()),
+                          errorText: authStore.validatePassword(),
+                          suffixIcon: const Icon(
+                            Icons.visibility
+                          ),
+                          ),
+                      
                     )),
             const SizedBox(
               height: 50,

@@ -8,7 +8,6 @@ class TokenStorage = _TokenStorageBase with _$TokenStorage;
 abstract class _TokenStorageBase with Store {
   static const _tokenKey = 'auth_token';
 
-  @observable
   String? token;
 
   @action
@@ -21,9 +20,10 @@ abstract class _TokenStorageBase with Store {
   }
 
   @action
-  Future<void> loadToken() async {
+  Future<bool> loadToken() async {
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString(_tokenKey);
+    return true;
   }
 
   @action

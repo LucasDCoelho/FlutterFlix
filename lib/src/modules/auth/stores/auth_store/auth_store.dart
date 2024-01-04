@@ -12,34 +12,15 @@ class AuthStore = AuthStoreBase with _$AuthStore;
 abstract class AuthStoreBase with Store {
   var client = Client();
   final authService = FirebaseAuthService();
+  
   final TokenStorage tokenStorage;
+  AuthStoreBase(this.tokenStorage);
 
 
   @computed
   bool get isValid {
     return validateEmail() == null && validatePassword() == null;
   }
-
-  @observable
-  bool isAuthenticated = false;
-
-  @action
-  setIsAuthenticated(bool value) => isAuthenticated = value;
-
-  AuthStoreBase(this.tokenStorage) {
-    // Adicione um ouvinte para as mudanças no estado de autenticação
-
-    if (isAuthenticated) {
-    // Adicione a lógica para inicializar o estado de autenticação aqui
-    User? user = authService.currentUser;
-    isAuthenticated = user != null;
-
-    if (isAuthenticated) {
-      updateToken();
-    }
-  }
-}
-
 
   @observable
   String? token;
@@ -60,6 +41,8 @@ abstract class AuthStoreBase with Store {
         return;
       } catch (error) {
         // Trata erros ao obter o token
+        print("Error: $error");
+      
       }
     }
     // Se não houver usuário autenticado, limpa o token
@@ -67,7 +50,7 @@ abstract class AuthStoreBase with Store {
   }
 
   String? validateEmail() {
-    if (client.email == "" || client.email.isEmpty) {
+    if (client.email == "") {
       return "Este campo é obrigatorio";
     }
 
@@ -78,7 +61,7 @@ abstract class AuthStoreBase with Store {
   }
 
   String? validatePassword() {
-    if (client.password == "" || client.password.isEmpty) {
+    if (client.password == "") {
       return "Este campo é obrigatorio";
     }
 

@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    );
+  );
 
     // Por default ele irá para o .env
     await dotenv.load();
