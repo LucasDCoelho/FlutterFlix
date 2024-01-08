@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flix_project_4/src/modules/auth/stores/auth_store/auth_store.dart';
 import 'package:flutter_flix_project_4/src/modules/client/stores/list_movies_store/list_movies_store.dart';
-import 'package:flutter_flix_project_4/src/modules/client/widget/movie_card.dart';
-import 'package:flutter_flix_project_4/src/modules/client/widget/movie_categories.dart';
+import 'package:flutter_flix_project_4/src/modules/client/widget/categories.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,11 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchMovies();
-  }
-
-  Future _fetchMovies() async {
-    await listMovies.loadAllMovies();
+    listMovies.loadAllMovies();
+    listMovies.loadAllSeries();
   }
 
   @override
@@ -34,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("FlutterFlix",
             style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold,
-              fontSize: 24)),
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 24)),
         backgroundColor: Colors.black87,
       ),
       body: Column(
@@ -45,18 +42,37 @@ class _HomeScreenState extends State<HomeScreen> {
           Observer(
               builder: (_) => ElevatedButton(
                   onPressed: authStore.logout, child: const Text("Sair"))),
-
-          MovieCategories(
-            future: _fetchMovies(), 
-            itemCount: listMovies.movies.length, 
-            itemBuilder: (context, index) {
-                        final movie = listMovies.movies[index];
-                        return MovieCard(
-                          posterPath: movie.posterPath,
-                        );
-                      },
-            titleCategorie: "Mais Populares",
+          Observer(builder: (_) {
+            switch (listMovies.moviesFuture.status) {
+              case FutureStatus.pending:
+                return const CircularProgressIndicator();
+              case FutureStatus.rejected:
+                return Text(
+                    'Erro ao carregar filmes: ${listMovies.moviesFuture.error}');
+              default:
+                return MovieCategories(
+                  list: listMovies.movies.toList(),
+                  titleCategorie: "Mais Populares",
+                );
+            }
+          }),
+          const SizedBox(
+            height: 20,
           ),
+          Observer(builder: (_) {
+             switch (listMovies.seriesFuture.status) {
+              case FutureStatus.pending:
+                return const CircularProgressIndicator();
+              case FutureStatus.rejected:
+                return Text(
+                    'Erro ao carregar as series: ${listMovies.seriesFuture.error}');
+              default:
+                return MovieCategories(
+                  list: listMovies.series.toList(),
+                  titleCategorie: "Series",
+                );
+            }
+          }),
         ],
       ),
     );
