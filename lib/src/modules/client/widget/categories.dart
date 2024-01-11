@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flix_project_4/src/modules/client/models/content_details_model.dart';
 import 'package:flutter_flix_project_4/src/modules/client/widget/custom_card.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MovieCategories extends StatefulWidget {
   final List<dynamic> list;
-  final String titleCategorie;
+  final String? titleCategorie;
 
   const MovieCategories({
     required this.list,
-    required this.titleCategorie,
+    this.titleCategorie,
     super.key,
   });
 
@@ -23,11 +24,15 @@ class _MovieCategoriesState extends State<MovieCategories> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.titleCategorie,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+        if (widget.titleCategorie != null)
+          Text(
+            widget.titleCategorie!,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         SizedBox(
           height: 200,
           child: ListView.builder(
@@ -43,8 +48,20 @@ class _MovieCategoriesState extends State<MovieCategories> {
                   fit: BoxFit.cover,
                   posterPath: card.posterPath,
                   onTap: () {
-                    Modular.to.pushReplacementNamed("/home/details",
-                        arguments: card.posterPath);
+                    print("Cheguei");
+                    Modular.to.pushNamed(
+                      "/home/details",
+                      arguments: ContentDetailsModel(
+                        id: card.id,
+                        title: card.title,
+                        overview: card.overview,
+                        posterPath: card.posterPath,
+                        popularity: card.popularity,
+                        voteAverage: card.voteAverage,
+                        voteCount: card.voteCount,
+                        // Adicione outros campos específicos de acordo com o tipo
+                      ),
+                    );
                   },
                 );
               }),

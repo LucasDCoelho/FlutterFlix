@@ -16,12 +16,19 @@ mixin _$ListMovies on ListMoviesBase, Store {
       (_$moviesComputed ??= Computed<List<MovieModel>>(() => super.movies,
               name: 'ListMoviesBase.movies'))
           .value;
-  Computed<List<SerieModel>>? _$seriesComputed;
+  Computed<List<SeriesModel>>? _$seriesComputed;
 
   @override
-  List<SerieModel> get series =>
-      (_$seriesComputed ??= Computed<List<SerieModel>>(() => super.series,
+  List<SeriesModel> get series =>
+      (_$seriesComputed ??= Computed<List<SeriesModel>>(() => super.series,
               name: 'ListMoviesBase.series'))
+          .value;
+  Computed<List<MovieModel>>? _$upComingComputed;
+
+  @override
+  List<MovieModel> get upComing =>
+      (_$upComingComputed ??= Computed<List<MovieModel>>(() => super.upComing,
+              name: 'ListMoviesBase.upComing'))
           .value;
 
   late final _$moviesFutureAtom =
@@ -44,15 +51,31 @@ mixin _$ListMovies on ListMoviesBase, Store {
       Atom(name: 'ListMoviesBase.seriesFuture', context: context);
 
   @override
-  ObservableFuture<List<SerieModel>> get seriesFuture {
+  ObservableFuture<List<SeriesModel>> get seriesFuture {
     _$seriesFutureAtom.reportRead();
     return super.seriesFuture;
   }
 
   @override
-  set seriesFuture(ObservableFuture<List<SerieModel>> value) {
+  set seriesFuture(ObservableFuture<List<SeriesModel>> value) {
     _$seriesFutureAtom.reportWrite(value, super.seriesFuture, () {
       super.seriesFuture = value;
+    });
+  }
+
+  late final _$upComingFutureAtom =
+      Atom(name: 'ListMoviesBase.upComingFuture', context: context);
+
+  @override
+  ObservableFuture<List<MovieModel>> get upComingFuture {
+    _$upComingFutureAtom.reportRead();
+    return super.upComingFuture;
+  }
+
+  @override
+  set upComingFuture(ObservableFuture<List<MovieModel>> value) {
+    _$upComingFutureAtom.reportWrite(value, super.upComingFuture, () {
+      super.upComingFuture = value;
     });
   }
 
@@ -72,13 +95,23 @@ mixin _$ListMovies on ListMoviesBase, Store {
     return _$loadAllSeriesAsyncAction.run(() => super.loadAllSeries());
   }
 
+  late final _$loadUpComingAsyncAction =
+      AsyncAction('ListMoviesBase.loadUpComing', context: context);
+
+  @override
+  Future<void> loadUpComing() {
+    return _$loadUpComingAsyncAction.run(() => super.loadUpComing());
+  }
+
   @override
   String toString() {
     return '''
 moviesFuture: ${moviesFuture},
 seriesFuture: ${seriesFuture},
+upComingFuture: ${upComingFuture},
 movies: ${movies},
-series: ${series}
+series: ${series},
+upComing: ${upComing}
     ''';
   }
 }

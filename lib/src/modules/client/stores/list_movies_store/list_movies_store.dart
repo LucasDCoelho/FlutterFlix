@@ -11,11 +11,14 @@ class ListMovies = ListMoviesBase with _$ListMovies;
 abstract class ListMoviesBase with Store{
   final _dioService = Modular.get<DioService>();
 
+  /// Get all the movies via DioService
+  /// returns 20 movies
   @observable
   ObservableFuture<List<MovieModel>> moviesFuture = ObservableFuture.value([]);
 
   @computed
   List<MovieModel> get movies => moviesFuture.value ?? [];
+
 
   @action
   Future loadAllMovies() async {
@@ -24,7 +27,6 @@ abstract class ListMoviesBase with Store{
         .then((response) {
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['results'];
-        print('Conteúdo de response.data: ${response.data}');
 
         // Retorna a lista de filmes
         return data.map((item) => MovieModel.fromMap(item)).toList();
@@ -34,18 +36,19 @@ abstract class ListMoviesBase with Store{
       }
     }).catchError((error) {
       // Captura a exceção e trata conforme necessário
-      print('Erro ao buscar filmes: $error');
       return List<MovieModel>.empty(); // Retorna uma lista vazia ou outro valor padrão
     }),
   );
   }
+  //---------------------------------------------------------------
 
-
+  /// Get all the Series via DioService
+  /// returns 20 series
   @observable
-  ObservableFuture<List<SerieModel>> seriesFuture = ObservableFuture.value([]);
+  ObservableFuture<List<SeriesModel>> seriesFuture = ObservableFuture.value([]);
 
   @computed
-  List<SerieModel> get series => seriesFuture.value ?? [];
+  List<SeriesModel> get series => seriesFuture.value ?? [];
 
   @action
   Future<void> loadAllSeries() async {
@@ -55,14 +58,47 @@ abstract class ListMoviesBase with Store{
           .then((response) {
         if (response.statusCode == 200) {
           final List<dynamic> data = response.data['results'];
-          print('Conteúdo de response.data: ${response.data}');
 
           // Retorna a lista de séries
-          return data.map((item) => SerieModel.fromMap(item)).toList();
+          return data.map((item) => SeriesModel.fromMap(item)).toList();
         } else {
           throw Exception('Erro ao buscar séries: ${response.statusCode}');
         }
       }),
     );
   }
+
+  //---------------------------------------------------------------
+
+  /// Get all the UpComing via DioService
+  /// returns 20 upComingss
+  @observable
+  ObservableFuture<List<MovieModel>> upComingFuture = ObservableFuture.value([]);
+
+  @computed
+  List<MovieModel> get upComing => upComingFuture.value ?? [];
+
+  @action
+  Future<void> loadUpComing() async {
+    upComingFuture = ObservableFuture(
+      _dioService
+          .get(url: "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1")
+          .then((response) {
+        if (response.statusCode == 200) {
+          final List<dynamic> data = response.data['results'];
+          print('Conteúdo de response.data: ${response.data}');
+
+
+          return data.map((item) => MovieModel.fromMap(item)).toList();
+        } else {
+          throw Exception('Erro ao buscar séries: ${response.statusCode}');
+        }
+      }),
+    );
+  }
+
+  //---------------------------------------------------------------
+
+
+  
 }
