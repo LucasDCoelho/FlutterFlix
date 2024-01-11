@@ -24,25 +24,31 @@ class SearchScreen extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (query) {
-                searchStore.setSearchQuery(query);
-              },
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              decoration: const InputDecoration(
-                  hintText: 'Buscar...',
-                  hintStyle: TextStyle(
+            child: Observer(builder: (_) {
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 2.w),
+                child: TextField(
+                  onChanged: (query) {
+                    searchStore.setSearchQuery(query);
+                    searchStore.searchMovies(query);
+                  },
+                  style: const TextStyle(
                     color: Colors.white,
-                  )),
-            ),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  decoration: const InputDecoration(
+                      hintText: 'Buscar...',
+                      hintStyle: TextStyle(
+                        color: Colors.white70,
+                      )),
+                ),
+              );
+            }),
           ),
           Expanded(
             child: Observer(
               builder: (context) {
-                if (searchStore.searchResults.isEmpty) {
+                if (searchStore.filteredResults.isEmpty) {
                   return const Center(
                     child: Text('Sem resultados...',
                         style: TextStyle(
@@ -65,7 +71,8 @@ class SearchScreen extends StatelessWidget {
                               width: 20.w
                           ),
                           SizedBox(
-                            width: 1.w, // Adicione um espaçamento adequado entre o cartão e o texto
+                            width: 1
+                                .w, // Adicione um espaçamento adequado entre o cartão e o texto
                           ),
                           Flexible(
                             child: Text(

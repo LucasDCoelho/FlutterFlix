@@ -29,6 +29,7 @@ abstract class _SearchMovieStoreBase with Store {
 
       if (response.statusCode == 200) {
         searchResults = ObservableList<dynamic>.of(response.data['results']);
+        updateFilteredResults();
       } else {
         searchResults = ObservableList<dynamic>();
       }
@@ -43,7 +44,7 @@ abstract class _SearchMovieStoreBase with Store {
     filteredResults = ObservableList<dynamic>.of(
       searchResults.where(
         (movie) =>
-            movie['title'].toLowerCase().contains(searchQuery.toLowerCase()),
+            movie['title'].toLowerCase().startsWith(searchQuery.toLowerCase()),
       ),
     );
   }
@@ -51,7 +52,6 @@ abstract class _SearchMovieStoreBase with Store {
   @action
   void setSearchQuery(String query) {
     searchQuery = query;
-    updateFilteredResults();
   }
 
 }
